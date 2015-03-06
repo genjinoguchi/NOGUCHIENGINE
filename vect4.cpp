@@ -32,3 +32,16 @@ double Vect4::get(int i) {
 			return NULL;
 	}
 }
+
+void Vect4::set(int i, double d) {
+	switch( i ) {
+		case 0:
+			x = d;
+		case 1:
+			y = d;
+		case 2:
+			z = d;
+		case 3:
+			w = d;
+	}
+}	

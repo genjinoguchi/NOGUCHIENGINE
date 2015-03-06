@@ -14,24 +14,29 @@ using namespace std;
 
 
 
-
-
-
-
 void Mat4::print() {
-	cout << "NOTE: rows and columns switched." << endl;
+	//cout << "NOTE: rows and columns switched." << endl;
 	cout << toString() << endl;
 }
 string Mat4::toString() {
 	string s;
 	int r, c;
 
+	for( r=0; r<VECT4_SIZE; r++ ) {
+		for( c=0; c<size(); c++ ) {
+			s += to_string(get(r, c)) + "\t";
+		}
+		s += "\n";
+	}
+	/* Swapping the rows adn columns for large sets of points */
+	/*
 	for( r=0; r<size(); r++ ) {
 		for( c=0; c<VECT4_SIZE; c++ ) {
 			s += to_string(get(r, c)) + " ";
 		}
 		s += "\n";
 	}
+	*/
 	
 	return s;
 }
@@ -134,7 +139,7 @@ bool Mat4::set(int r, int c, double value) {
 		c > size()-1) {
 		return false;
 	} else {
-		return data[c].get(r);
+		data[c].set(r, value);
 	}
 }
 
@@ -156,11 +161,13 @@ void Mat4::apply(Mat4 m) {
 	}
 
 	int r, c, i, dot;
+	Vect4 tmp_row;
 	for( c=0; c<size(); c++ ) {		// <<<<<< haha i wrote c++
+		tmp_row = data[c];
 		for( r=0; r<VECT4_SIZE; r++ ) {
 			dot = 0;
 			for( i=0; i<VECT4_SIZE; i++ ) {
-				dot += m.get(r, i) * get(c, i);
+				dot += m.get(r, i) * tmp_row.get(i);
 			}
 			set(r, c, dot);
 		}
@@ -170,10 +177,10 @@ void Mat4::apply(Mat4 m) {
 /* Transformation helpers */
 Mat4 Mat4::transMatrix( double dx, double dy, double dz) {
 	Mat4 tmp;
-	Vect4 v1(	1, 	0,	0,	dx),
-		  v2(	0,	1,	0,	dy),
-		  v3(	0,	0,	1,	dz),
-		  v4(	0,	0,	0,	1 );
+	Vect4 v1(	1, 	0,	0,	0),
+		  v2(	0,	1,	0,	0),
+		  v3(	0,	0,	1,	0),
+		  v4(	dx,	dy,	dz,	1 );
 
 	tmp.insert(v1);	
 	tmp.insert(v2);	
