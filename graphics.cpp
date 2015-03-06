@@ -5,45 +5,33 @@
 
 using namespace std;
 
-Graphics::Graphics(const Raster &r)
-			: raster(r) {
-	size_m = 0;
+Graphics::Graphics() {
+		
 }
 
-int Graphics::add_mesh(Mesh& m) {
-	int temp;
-
-	temp = meshes.size();
-	
-	
-	return;
+int Graphics::addMesh(Mesh& m) {
+		meshes.push_back(m);
+			return meshes.size()-1;
 }
 
-Mesh * Graphics::get_meshes() {
-	return meshes;
-}
-
-void Graphics::export_graph() {
+void Graphics::exportGraph() {
 	int i,j;
-	double * tmp_p;
-	int * tmp_e;
-	
-	for (j=0;j<size_m;j++) {
-		tmp_p = meshes[j].get_points();
-		tmp_e = meshes[j].get_edges();
-		for (i=0;i<meshes[j].get_length_e();i+=2) {
-			raster.draw_line(
-					tmp_p[tmp_e[i]*VECTOR_COMPS],
-					tmp_p[tmp_e[i]*VECTOR_COMPS+1],
-					tmp_p[tmp_e[i+1]*VECTOR_COMPS],
-					tmp_p[tmp_e[i+1]*VECTOR_COMPS+1]);
+	vector<Vect4> p;
+	vector<int> e;
+
+	for (j=0;j<meshes.size();j++) {
+		p = meshes[j].data;
+		e = meshes[j].edges;
+		for (i=0;i<e.size();i+=2) {
+			raster.drawLine(
+					p[e[i]].x,	
+					p[e[i]].y,	
+					p[e[i+1]].x,	
+					p[e[i+1]].y
+					);
 		}
 	}
 
-	raster.export_ppm();
-}
-
-int Graphics::mem_m() {
-	return sizeof(meshes) / sizeof(Mesh);
+	raster.exportPPM();
 }
 

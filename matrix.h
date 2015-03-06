@@ -17,6 +17,7 @@ class Mat4 {
 	
 	public:
 		vector<Vect4> data;
+		Mat4 transform;
 
 		bool set(int r, int c, double value);
 		int insert(Vect4 v);

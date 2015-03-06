@@ -9,8 +9,9 @@ using namespace std;
  * Matrix Class Definitions
  */
 
-
-
+Mat4::Mat4() {
+	transform = Mat4::identity();
+}
 
 
 
