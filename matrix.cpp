@@ -10,7 +10,7 @@ using namespace std;
  */
 
 Mat4::Mat4() {
-	transform = Mat4::identity();
+	//transform = Mat4::identity();
 }
 
 
@@ -207,8 +207,8 @@ Mat4 Mat4::scaleMatrix(double a, double b, double c) {
 Mat4 Mat4::rotXMatrix(double t) {
 	Mat4 tmp;
 	Vect4 v1(		 1,		  0,		  0,	0),
-		  v2(		 0,  cos(t),	-sin(t),	0),
-		  v3(		 0,	 sin(t),	 cos(t),	0),
+		  v2(		 0,  cos(t),	 sin(t),	0),
+		  v3(		 0,	-sin(t),	 cos(t),	0),
 		  v4(		 0,	   	  0,		  0,	1);
 
 	tmp.insert(v1);	
@@ -220,9 +220,9 @@ Mat4 Mat4::rotXMatrix(double t) {
 }
 Mat4 Mat4::rotYMatrix(double t) {
 	Mat4 tmp;
-	Vect4 v1(	cos(t),		  0,   -sin(t),		0),
+	Vect4 v1(	cos(t),		  0,    sin(t),		0),
           v2(		 0,		  1,		 0,		0),
-          v3(	sin(t),	 	  0, 	cos(t),		0),
+          v3(  -sin(t),	 	  0, 	cos(t),		0),
           v4(		 0,	   	  0,		 0,		1);
 
 	tmp.insert(v1);	
@@ -234,8 +234,8 @@ Mat4 Mat4::rotYMatrix(double t) {
 }
 Mat4 Mat4::rotZMatrix(double t) {
 	Mat4 tmp;
-	Vect4 v1(	cos(t),	-sin(t),		 0,		0),
-		  v2(	sin(t),	 cos(t),		 0,		0),
+	Vect4 v1(	cos(t),	 sin(t),		 0,		0),
+		  v2(  -sin(t),	 cos(t),		 0,		0),
 		  v3(		 0,		  0,		 1,		0),
 		  v4(		 0,	   	  0,		 0,		1);
 

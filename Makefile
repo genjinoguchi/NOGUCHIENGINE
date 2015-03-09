@@ -22,7 +22,10 @@ vect4.o: vect4.cpp vect4.h
 display:
 	display out.ppm
 
-
+run:
+	make
+	./a.out
+	make display
 
 clean:
 	rm *.o

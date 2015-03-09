@@ -20,6 +20,7 @@ void Graphics::exportGraph() {
 	vector<int> e;
 
 	for (j=0;j<meshes.size();j++) {
+		meshes[j].transform();
 		p = meshes[j].data;
 		e = meshes[j].edges;
 		for (i=0;i<e.size();i+=2) {
