@@ -5,6 +5,7 @@
 #include <vector>
 #include "vect4.h"
 
+
 using std::vector;
 using std::string;
 
@@ -53,6 +54,10 @@ class Mat4 {
 
 		bool isSquare();
 		static bool isSquare(Mat4 m);
+
+		/* Math */
+		static double toRadians(double deg);
+		static double toDegrees(double rad);
 	
 		void print();
 		string toString();

@@ -1,12 +1,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
+#include <cmath>
 #include "mesh.h"
 
 using namespace std;
 
 Mesh::Mesh() {
-
+	transformation = identity();
 }
 
 
@@ -15,10 +16,35 @@ void Mesh::insertEdge(int a, int b) {
 	edges.push_back(b);
 }
 
-void Mesh::transform() {
-	apply(transformation);
+/* Circle Functions */
+void Mesh::insertCircle(double cx, double cy, double r) {
+	double t;
+	double  x,  y,
+		   x0, y0;
+
+	x0 = cx + r;
+	y0 = cy;
+	for( t=0; t<=1+STEP_SIZE; t+=STEP_SIZE ) {
+		x = cx + r*unitCircleX(t);
+		y = cy + r*unitCircleY(t);
+		insertEdge(insert(x0,y0,0,1), insert(x,y,0,1));
+		x0 = x;
+		y0 = y;
+	}
+}
+inline double Mesh::unitCircleX(double t) {
+	return cos(t*2*M_PI);
+}
+inline double Mesh::unitCircleY(double t) {
+	return sin(t*2*M_PI);
 }
 
+void Mesh::applyTransformation() {
+	apply(transformation);
+}
+Mat4 Mesh::transformPoints() {
+	return Mat4::mult(transformation, *this);
+}
 
 // Transformation Function Overrides
 bool Mesh::trans(double dx, double dy, double dz) {

@@ -7,6 +7,7 @@
 #include "raster.h"
 #define MIN_MAT_SIZE 64
 #define VECTOR_COMPS 4
+#define STEP_SIZE 0.01
 
 using std::vector;
 
@@ -18,12 +19,36 @@ class Mesh : public Mat4 {
 		vector<int> edges;
 		Mat4 transformation;
 		
-
-		/* Insert 2 edges into the edge matrix. */
+		////////// Edge Creation //////////////////////////
+		/* 
+		 * Insert 2 edges into the edge matrix.
+		 * Ints represent the position of the points in the point matrix.
+		 */
 		void insertEdge(int, int);
 
+		////////// Curve Creation /////////////////////////
+		
+		/* 
+		 * Circle Creation Functions
+		 */
+		void insertCircle(double x, double y, double r);
+		inline double unitCircleX(double t);
+		inline double unitCircleY(double t);
+
+		void insertCurveH(double x1, double y1,
+						double x2, double y2,
+						double x3, double y3,
+						double x4, double y4);
+		void insertCurveB(double x1, double y1,
+						double x2, double y2,
+						double x3, double y3,
+						double x4, double y4);	
+
 		/* Apply the transformation matrix */
-		void transform();
+		void applyTransformation();
+
+		/* Return a copy of the translated matrix */
+		Mat4 transformPoints();
 
 		/* Transformation function overrides.
 		 *

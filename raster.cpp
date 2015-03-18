@@ -55,7 +55,7 @@ Pixel Raster::get(int x, int y) {
 	}
 }
 bool Raster::inRange(int x, int y) {
-	return x<width && y<height;
+	return (x<width && y<height) && (x > 0 && y > 0);
 }
 
 
@@ -79,6 +79,11 @@ void Raster::exportPPM() {
 	fs.close();
 }
 
+
+
+
+
+/* Bresenham's Line Drawing Algorithm */
 void Raster::drawLine(int x1, int y1, int x2, int y2) {
 	double m;
 	double tmp1, tmp2, tmp3, tmp4;
@@ -104,20 +109,20 @@ void Raster::drawLine(int x1, int y1, int x2, int y2) {
 
 	// Calculate slope with no risk of divide by zero
 	m = ((double)y2 - (double)y1) / ((double)x2 - (double)x1);
-	cout << "m = " << to_string(y2-y1) << "/" << to_string(x2-x1) << " = " << to_string(m) << endl;	
+	//cout << "m = " << to_string(y2-y1) << "/" << to_string(x2-x1) << " = " << to_string(m) << endl;	
 	
 	// Split the line-drawing into octants.
 	if ( 0 <= m && m <= 1 ) {
-		cout << "Drawing line in quadrant 1." << endl;
+		//cout << "Drawing line in quadrant 1." << endl;
 		drawLine_o1(x1, y1, x2, y2);
 	} else if ( 1 < m ) {
-		cout << "Drawing line in quadrant 2." << endl;
+		//cout << "Drawing line in quadrant 2." << endl;
 		drawLine_o2(x1, y1, x2, y2);
 	} else if ( m < -1 ) {
-		cout << "Drawing line in quadrant 3." << endl;
+		//cout << "Drawing line in quadrant 3." << endl;
 		drawLine_o3(x1, y1, x2, y2);
 	} else {   // -1 < m && m <= 0
-		cout << "Drawing line in quadrant 4." << endl;
+		//cout << "Drawing line in quadrant 4." << endl;
 		drawLine_o4(x1, y1, x2, y2);
 	}
 }
@@ -204,3 +209,16 @@ void Raster::drawLine_o4(int x1, int y1, int x2, int y2) {
 		d+=A;
 	}	
 }
+
+
+
+
+
+/* Parametric Circle Drawing Algorithm */
+
+
+
+
+
+
+/* Curve Drawing Algorithms */

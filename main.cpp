@@ -2,13 +2,17 @@
 #include "graphics.h"
 #include "raster.h"
 #include "matrix.h"
+#include "mesh.h"
+#include "vect4.h"
+#include "loader.h"
 
 using namespace std;
 
 int main() {
-	Mesh m, m2;
 	Graphics g;
+	//Mesh m, m2;
 
+	/*
 	int p1,p2,p3,p4,p5,p6,p7,p8;
 	int m1;
 
@@ -38,17 +42,23 @@ int main() {
 
 	m2 = m;
 
-	/* Transformations */
-	m.rotateX(0.3);
-	m.rotateY(0.3);
-	m.rotateZ(0.3);
+	m.rotateY(45);
+	m.rotateX(45);
+	m.rotateZ(45);
+	m.transformation.print();
 
 	//m.insertEdge(p4,p1);
 	m.toString();
 
-	m1 = g.addMesh(m);
-	g.addMesh(m2);
+
+	g.addMesh(m);
+	//g.addMesh(m2);
+
+	*/
+
 	g.exportGraph();
+
+	int i = g.loadDWFile("curvetest.dwobj");
 
 	cout << "Done." << endl;
 

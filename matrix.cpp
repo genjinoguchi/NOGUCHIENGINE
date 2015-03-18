@@ -24,7 +24,7 @@ string Mat4::toString() {
 	int r, c;
 
 	for( r=0; r<VECT4_SIZE; r++ ) {
-		for( c=0; c<size(); c++ ) {
+		for( c=0; c<size(); c++ ) { // << haha
 			s += to_string(get(r, c)) + "\t";
 		}
 		s += "\n";
@@ -40,6 +40,16 @@ string Mat4::toString() {
 	*/
 	
 	return s;
+}
+
+/* 
+ * Math helpers
+ */
+double Mat4::toRadians(double deg) {
+	return deg / 180 * M_PI;
+}
+double Mat4::toDegrees(double rad) {
+	return rad / M_PI * 180;
 }
 
 /*
@@ -161,7 +171,8 @@ void Mat4::apply(Mat4 m) {
 		return;
 	}
 
-	int r, c, i, dot;
+	int r, c, i;
+	double dot;
 	Vect4 tmp_row;
 	for( c=0; c<size(); c++ ) {		// <<<<<< haha i wrote c++
 		tmp_row = data[c];
@@ -173,6 +184,12 @@ void Mat4::apply(Mat4 m) {
 			set(r, c, dot);
 		}
 	}
+}
+Mat4 Mat4::mult(Mat4 a, Mat4 b) {
+	Mat4 tmp;
+	tmp = b;
+	tmp.apply(a);
+	return tmp;
 }
 
 /* Transformation helpers */
@@ -204,8 +221,11 @@ Mat4 Mat4::scaleMatrix(double a, double b, double c) {
 	
 	return tmp;
 }
-Mat4 Mat4::rotXMatrix(double t) {
+Mat4 Mat4::rotXMatrix(double theta) {
 	Mat4 tmp;
+	double t;
+	
+	t = Mat4::toRadians(theta);
 	Vect4 v1(		 1,		  0,		  0,	0),
 		  v2(		 0,  cos(t),	 sin(t),	0),
 		  v3(		 0,	-sin(t),	 cos(t),	0),
@@ -216,10 +236,15 @@ Mat4 Mat4::rotXMatrix(double t) {
 	tmp.insert(v3);	
 	tmp.insert(v4);	
 
+	tmp.print();
+
 	return tmp;
 }
-Mat4 Mat4::rotYMatrix(double t) {
+Mat4 Mat4::rotYMatrix(double theta) {
 	Mat4 tmp;
+	double t;
+
+	t = Mat4::toRadians(theta);
 	Vect4 v1(	cos(t),		  0,    sin(t),		0),
           v2(		 0,		  1,		 0,		0),
           v3(  -sin(t),	 	  0, 	cos(t),		0),
@@ -232,8 +257,11 @@ Mat4 Mat4::rotYMatrix(double t) {
 
 	return tmp;
 }
-Mat4 Mat4::rotZMatrix(double t) {
+Mat4 Mat4::rotZMatrix(double theta) {
 	Mat4 tmp;
+	double t;
+
+	t = Mat4::toRadians(theta);
 	Vect4 v1(	cos(t),	 sin(t),		 0,		0),
 		  v2(  -sin(t),	 cos(t),		 0,		0),
 		  v3(		 0,		  0,		 1,		0),
@@ -246,5 +274,3 @@ Mat4 Mat4::rotZMatrix(double t) {
 
 	return tmp;
 }
-
-

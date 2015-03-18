@@ -1,5 +1,5 @@
-all: main.o graphics.o raster.o matrix.o mesh.o vect4.o
-	g++ main.o graphics.o raster.o matrix.o mesh.o vect4.o
+all: main.o graphics.o raster.o matrix.o mesh.o vect4.o loader.o
+	g++ main.o graphics.o raster.o matrix.o mesh.o vect4.o loader.o
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -19,13 +19,13 @@ matrix.o: matrix.cpp matrix.h
 vect4.o: vect4.cpp vect4.h
 	g++ -c vect4.cpp
 
+loader.o: loader.cpp loader.h
+	g++ -c loader.cpp
+
+
+
 display:
 	display out.ppm
-
-run:
-	make
-	./a.out
-	make display
 
 clean:
 	rm *.o
