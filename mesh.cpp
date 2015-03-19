@@ -99,13 +99,20 @@ Mat4 Mesh::bezierMatrix() {
 
 /* Hermite Creation Functions */
 void Mesh::insertHermite(double x0, double y0,
-                         double rx0, double ry0,
 	                     double x1, double y1,
-                         double rx1, double ry1){
-	double x, y, Px, Py;	
+	                     double x2, double y2,
+                         double x3, double y3){
+	double x, y, Px, Py;
+	double rx0, ry0, rx2, ry2;
+
+	rx0 = x1 - x0;
+	ry0 = y1 - y0;
+	rx2 = x3 - x2;
+	ry2 = y3 - y2;
+
 	Mat4 input, hermite, coef;
-	Vect4 v1(x0, x1, rx0, rx1);
-	Vect4 v2(y0, y1, ry0, ry1);	
+	Vect4 v1(x0, x2, rx0, rx2);
+	Vect4 v2(y0, y2, ry0, ry2);
 	input.insert(v1);
 	input.insert(v2);
 
