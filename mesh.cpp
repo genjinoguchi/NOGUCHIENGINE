@@ -115,7 +115,6 @@ void Mesh::insertHermite(double x0, double y0,
 	Py = y0;
 	double t;
 	for( t=0; t<1.0+STEP_SIZE; t+=STEP_SIZE ){
-		cout << "T: " << to_string(t) << endl;
 		coef = mult(hermite, input);
 		x = calcCubic(
 				coef.get(0,0),
