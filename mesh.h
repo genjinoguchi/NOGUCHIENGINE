@@ -35,14 +35,25 @@ class Mesh : public Mat4 {
 		inline double unitCircleX(double t);
 		inline double unitCircleY(double t);
 
-		void insertCurveH(double x1, double y1,
-						double x2, double y2,
-						double x3, double y3,
-						double x4, double y4);
-		void insertCurveB(double x1, double y1,
-						double x2, double y2,
-						double x3, double y3,
-						double x4, double y4);	
+		/*
+		 * Hermite Creation Functions
+		 */
+		void insertHermite(double x0, double y0,
+						   double rx0, double ry0,
+						   double x1, double y1,
+						   double rx1, double ry1);
+		static Mat4 hermiteMatrix();
+
+		/*
+		 * Bezier Creation Functions
+		 */
+		void insertBezier(double x1, double y1,
+						  double x2, double y2,
+						  double x3, double y3,
+						  double x4, double y4);	
+		inline double calcCubic(double a, double b, double c, double d, double t);
+		static Mat4 bezierMatrix();
+		
 
 		/* Apply the transformation matrix */
 		void applyTransformation();

@@ -142,6 +142,22 @@ int Graphics::loadDWFile(string filename) {
 			if(iss >> x >> y >> r) {
 				m.insertCircle(x, y, r);
 			}
+		} else if (line == "b") {
+			cout << "Found b" << endl;
+			double x0, y0, x1, y1, x2, y2, x3, y3;
+			getline(file, args);
+			istringstream iss(args);
+			if(iss >> x0 >> y0 >> x1 >> y1 >> x2 >> y2 >> x3 >> y3) {
+				m.insertBezier(x0, y0, x1, y1, x2, y2, x3, y3);
+			}
+		} else if (line == "h") {
+			cout << "Found h" << endl;
+			double x0, y0, x1, y1, x2, y2, x3, y3;
+			getline(file, args);
+			istringstream iss(args);
+			if(iss >> x0 >> y0 >> x1 >> y1 >> x2 >> y2 >> x3 >> y3) {
+				m.insertHermite(x0, y0, x1, y1, x2, y2, x3, y3);
+			}
 		} else if( line == "a" ) {
 			cout << "Found a" << endl;
 			m.applyTransformation();

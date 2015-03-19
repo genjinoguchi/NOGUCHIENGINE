@@ -39,6 +39,121 @@ inline double Mesh::unitCircleY(double t) {
 	return sin(t*2*M_PI);
 }
 
+/* Bezier Curve Functions */
+void Mesh::insertBezier( double x0, double y0,
+						 double x1, double y1,
+                         double x2, double y2,
+                         double x3, double y3) {
+	double x, y, Px, Py;	
+	Mat4 input, bezier, coef;
+	Vect4 v1(x0, x1, x2, x3);
+	Vect4 v2(y0, y1, y2, y3);
+	input.insert(v1);
+	input.insert(v2);
+
+	bezier = bezierMatrix();
+
+	Px = x0;
+	Py = y0;
+	double t;
+	for( t=0; t<1.0+STEP_SIZE; t+=STEP_SIZE ){
+		coef = mult(bezier, input);
+		x = calcCubic(
+				coef.get(0,0),
+				coef.get(1,0),
+				coef.get(2,0),
+				coef.get(3,0),
+				t );
+		y = calcCubic(
+				coef.get(0,1),
+				coef.get(1,1),
+				coef.get(2,1),
+				coef.get(3,1),
+				t );
+		insertEdge(insert(Px, Py, 0, 1), insert(x, y, 0, 1));
+		Px = x;
+		Py = y;
+	}
+}
+
+inline double Mesh::calcCubic(double a, double b, double c, double d, double t) {
+	return (a*t*t*t) + (b*t*t) + (c*t) + d;
+}
+
+Mat4 Mesh::bezierMatrix() {	
+	Mat4 tmp;
+	Vect4 v1(-1, 3,-3, 1 ),
+		  v2( 3,-6, 3, 0 ),
+		  v3(-3, 3, 0, 0 ),
+		  v4( 1, 0, 0, 0 );
+
+	tmp.insert(v1);
+	tmp.insert(v2);
+	tmp.insert(v3);
+	tmp.insert(v4);
+
+	return tmp;
+
+}
+
+
+/* Hermite Creation Functions */
+void Mesh::insertHermite(double x0, double y0,
+                         double rx0, double ry0,
+	                     double x1, double y1,
+                         double rx1, double ry1){
+	double x, y, Px, Py;	
+	Mat4 input, hermite, coef;
+	Vect4 v1(x0, x1, rx0, rx1);
+	Vect4 v2(y0, y1, ry0, ry1);	
+	input.insert(v1);
+	input.insert(v2);
+
+	hermite = hermiteMatrix();
+
+	Px = x0;
+	Py = y0;
+	double t;
+	for( t=0; t<1.0+STEP_SIZE; t+=STEP_SIZE ){
+		cout << "T: " << to_string(t) << endl;
+		coef = mult(hermite, input);
+		x = calcCubic(
+				coef.get(0,0),
+				coef.get(1,0),
+				coef.get(2,0),
+				coef.get(3,0),
+				t );
+		y = calcCubic(
+				coef.get(0,1),
+				coef.get(1,1),
+				coef.get(2,1),
+				coef.get(3,1),
+				t );
+		insertEdge(insert(Px, Py, 0, 1), insert(x, y, 0, 1));
+		Px = x;
+		Py = y;
+	}
+}
+
+Mat4 Mesh::hermiteMatrix() {	
+	Mat4 tmp;
+	Vect4 v1( 2,-3, 0, 1 ),
+		  v2(-2, 3, 0, 0 ),
+		  v3( 1,-2, 1, 0 ),
+		  v4( 1,-1, 0, 0 );
+
+	tmp.insert(v1);
+	tmp.insert(v2);
+	tmp.insert(v3);
+	tmp.insert(v4);
+
+	return tmp;
+}
+
+
+
+
+
 void Mesh::applyTransformation() {
 	apply(transformation);
 }
