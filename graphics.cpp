@@ -8,7 +8,12 @@
 using namespace std;
 
 Graphics::Graphics() {
-		
+	
+}
+
+Graphics::Graphics(int width, int height) {
+	Raster tmp(width, height);
+	this->raster = tmp;
 }
 
 int Graphics::addMesh(Mesh& m) {

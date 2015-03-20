@@ -13,6 +13,7 @@ using namespace std;
 class Graphics {
 	public:
 		Graphics();
+		Graphics(int width, int height);
 
 		vector<Mesh> meshes;
 		Raster raster;

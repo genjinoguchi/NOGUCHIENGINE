@@ -4,6 +4,9 @@
 #include <vector>
 #include "mesh.h"
 
+#define DEFAULT_WIDTH 700
+#define DEFAULT_HEIGHT 700
+
 struct Pixel {
 	unsigned char r, g, b;
 };

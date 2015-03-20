@@ -10,7 +10,7 @@ using namespace std;
 
 // Constructor definitions
 Raster::Raster() {
-	Raster::init(500,500);
+	Raster::init(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 }
 
 Raster::Raster(int width, int height) {
@@ -36,6 +36,7 @@ void Raster::clear() {
 }
 void Raster::plot(int x, int y, Pixel p) {
 	if(inRange(x, y)) {
+		y = height - y;
 		display[y*width + x].r = p.r;
 		display[y*width + x].g = p.g;
 		display[y*width + x].b = p.b;
@@ -210,15 +211,3 @@ void Raster::drawLine_o4(int x1, int y1, int x2, int y2) {
 	}	
 }
 
-
-
-
-
-/* Parametric Circle Drawing Algorithm */
-
-
-
-
-
-
-/* Curve Drawing Algorithms */

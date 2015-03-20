@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-	Graphics g;
+	Graphics g(500,500);
 	//Mesh m, m2;
 
 	/*
