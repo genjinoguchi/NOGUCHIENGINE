@@ -7,7 +7,7 @@
 #include "raster.h"
 #define MIN_MAT_SIZE 64
 #define VECTOR_COMPS 4
-#define STEP_SIZE 0.01
+#define STEP_SIZE 0.05
 
 using std::vector;
 
@@ -25,6 +25,33 @@ class Mesh : public Mat4 {
 		 * Ints represent the position of the points in the point matrix.
 		 */
 		void insertEdge(int, int);
+
+		////////// 3D /////////////////////////////////////
+		/*
+		 * Cube
+		 */
+		void insertRectPrism(
+			double x, double y, double z,
+			double w, double h, double d
+		);
+		/*
+		 * Sphere
+		 */
+		void insertSphere(
+			double x, double y,
+			double r
+		);
+		inline double unitSphereX(double t, double p);
+		inline double unitSphereY(double t, double p);
+		inline double unitSphereZ(double t, double p);
+		/*
+		 * Torus
+		 */
+		void insertTorus(
+			double x, double y,
+			double radius1,
+			double radius2
+		);
 
 		////////// Curve Creation /////////////////////////
 		

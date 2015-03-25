@@ -30,11 +30,10 @@ void Graphics::exportGraph() {
 	for (j=0;j<meshes.size();j++) {
 		p = meshes[j].transformPoints().data;
 		e = meshes[j].edges;
-		cout << "No seg yet" << endl;
 		for (i=0;i<e.size();i+=2) {
-			cout << to_string(i) << endl;
-			cout << to_string(p[e[i]].x) << endl;	
-			cout << to_string(p[e[i+1]].x) << endl;	
+			cout << to_string(p[e[i]].y) << endl;	
+			cout << to_string(p[e[i+1]].y) << endl;	
+			cout << endl;
 			raster.drawLine(
 					p[e[i]].x,	
 					p[e[i]].y,	
@@ -162,6 +161,14 @@ int Graphics::loadDWFile(string filename) {
 			istringstream iss(args);
 			if(iss >> x0 >> y0 >> x1 >> y1 >> x2 >> y2 >> x3 >> y3) {
 				m.insertHermite(x0, y0, x1, y1, x2, y2, x3, y3);
+			}
+		} else if (line == "m") {
+			cout << "Found m" << endl;
+			double x, y, r;
+			getline(file, args);
+			istringstream iss(args);
+			if(iss >> x >> y >> r) {
+				m.insertSphere(x, y, r);
 			}
 		} else if( line == "a" ) {
 			cout << "Found a" << endl;

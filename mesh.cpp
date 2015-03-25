@@ -39,6 +39,45 @@ inline double Mesh::unitCircleY(double t) {
 	return sin(t*2*M_PI);
 }
 
+/* 3D Shapes */
+void Mesh::insertRectPrism(
+		double x, double y, double z,
+		double w, double h, double d ) {
+
+}
+
+void Mesh::insertSphere(
+		double x, double y,
+		double r) {
+	double theta, phi;
+	double x1, y1, z1;
+	int p;
+	
+	for( phi=0; phi<=1+STEP_SIZE; phi+=STEP_SIZE ){
+		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
+			x1 = x + (r * unitSphereX(theta, phi));
+			y1 = y + (r * unitSphereY(theta, phi));
+			z1 =  	 (r * unitSphereZ(theta, phi));
+			//cout << sin(phi*M_PI) << " ";
+			//cout << sin(theta*2*M_PI) << endl;
+			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
+			p = insert(x1, y1, z1, 0);
+			insertEdge(p, p);				// Create a point.
+		}
+	}
+}
+
+inline double Mesh::unitSphereX(double theta, double phi) {
+	return cos(theta * M_PI);
+}
+inline double Mesh::unitSphereY(double theta, double phi) {
+	return sin(theta * M_PI)*cos(phi * 2 * M_PI);
+}
+inline double Mesh::unitSphereZ(double theta, double phi) {
+	return sin(theta * M_PI)*sin(phi * 2 * M_PI);
+}
+
+
 /* Bezier Curve Functions */
 void Mesh::insertBezier( double x0, double y0,
 						 double x1, double y1,

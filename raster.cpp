@@ -96,18 +96,6 @@ void Raster::drawLine(int x1, int y1, int x2, int y2) {
 		return;
 	}
 
-
-	// Account for the divide by zero error
-	if (x1 == x2) {
-		if (y2==y1) {
-			return;
-		} else if (y2>y1) {
-			drawLine_o2(x1, y1, x2, y2);
-		} else {
-			drawLine_o3(x1, y1, x2, y2);
-		}
-	}
-
 	// Calculate slope with no risk of divide by zero
 	m = ((double)y2 - (double)y1) / ((double)x2 - (double)x1);
 	//cout << "m = " << to_string(y2-y1) << "/" << to_string(x2-x1) << " = " << to_string(m) << endl;	
