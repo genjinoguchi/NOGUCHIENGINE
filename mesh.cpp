@@ -42,13 +42,32 @@ inline double Mesh::unitCircleY(double t) {
 /* 3D Shapes */
 void Mesh::insertRectPrism(
 		double x, double y, double z,
-		double w, double h, double d
-		) {
+		double w, double h, double d ) {
+	int tbl, tbr, tfl, tfr,
+		bbl, bbr, bfl, bfr;
+
+	tfl = insert(x, y, z, 0);
+	tfr = insert(x+w, y, z, 0);
+	tbl = insert(x, y, z+d, 0);
+	tbr = insert(x+w, y, z+d, 0);
+	bfl = insert(x, y-d, z, 0);
+	bfr = insert(x+w, y-d, z, 0);
+	bbl = insert(x, y-d, z+d, 0);
+	bbr = insert(x+w, y-d, z+d, 0);
+
+	insertEdge(tfl, tfl);
+	insertEdge(tfr, tfr);
+	insertEdge(tbl, tbl);
+	insertEdge(tbr, tbr);
+	insertEdge(bfl, bfl);
+	insertEdge(bfr, bfr);
+	insertEdge(bbl, bbl);
+	insertEdge(bbr, bbr);
 }
 
 void Mesh::insertSphere(
 		double x, double y,
-		double r) {
+		double r ) {
 	double theta, phi;
 	double x1, y1, z1;
 	int p;
@@ -61,8 +80,8 @@ void Mesh::insertSphere(
 			//cout << sin(phi*M_PI) << " ";
 			//cout << sin(theta*2*M_PI) << endl;
 			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
-			p = insert(x1, y1, z1, 0);
-			insertEdge(p, p);				// Create a point.
+			p = insert( x1, y1, z1, 0 );				// Add point to point matrix
+			insertEdge( p, p );							// Plot point as line.
 		}
 	}
 }
@@ -75,6 +94,40 @@ inline double Mesh::unitSphereY(double theta, double phi) {
 }
 inline double Mesh::unitSphereZ(double theta, double phi) {
 	return sin(theta * 2 * M_PI)*sin(phi * M_PI);
+}
+
+
+void Mesh::insertTorus(
+		double x, double y,
+		double r1, double r2) {
+	double theta, phi;
+	double x1, y1, z1;
+	int p;
+
+	for( phi=0; phi<=1; phi+=STEP_SIZE ){
+		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE){
+			x1 = x + torusX( theta, phi, r1, r2 );
+			y1 = x + torusY( theta, phi, r1, r2 );
+			z1 = x + torusZ( theta, phi, r1, r2 );
+			p = insert( x1, y1, z1, 0 );			// Add point to point matrix.
+			insertEdge( p, p );						// Plot point as line
+		}
+	}
+}
+inline double Mesh::torusX(
+		double t, double p,
+		double cr, double tr ){
+	return cos(2*M_PI * p) * (cr*cos(2*M_PI * t) + tr);
+}
+inline double Mesh::torusY(
+		double t, double p,
+		double cr, double tr ){
+	return cr*sin(2*M_PI * t);
+}
+inline double Mesh::torusZ(
+		double t, double p,
+		double cr, double tr ){
+	return -sin(2*M_PI * p) * (cr*cos(2*M_PI * t) + tr);
 }
 
 

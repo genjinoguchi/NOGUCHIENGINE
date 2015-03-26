@@ -162,6 +162,14 @@ int Graphics::loadDWFile(string filename) {
 			if(iss >> x0 >> y0 >> x1 >> y1 >> x2 >> y2 >> x3 >> y3) {
 				m.insertHermite(x0, y0, x1, y1, x2, y2, x3, y3);
 			}
+		} else if (line == "p") {
+			cout << "Found p" << endl;
+			double x, y, z, w, h, d;
+			getline(file, args);
+			istringstream iss(args);
+			if(iss >> x >> y >> z >> w >> h >> d) {
+				m.insertRectPrism(x, y, z, w, h, d);
+			}
 		} else if (line == "m") {
 			cout << "Found m" << endl;
 			double x, y, r;
@@ -169,6 +177,14 @@ int Graphics::loadDWFile(string filename) {
 			istringstream iss(args);
 			if(iss >> x >> y >> r) {
 				m.insertSphere(x, y, r);
+			}
+		} else if (line == "d") {
+			cout << "Found d" << endl;
+			double x, y, r1, r2;
+			getline(file, args);
+			istringstream iss(args);
+			if(iss >> x >> y >> r1 >> r2) {
+				m.insertTorus(x, y, r1, r2);
 			}
 		} else if( line == "a" ) {
 			cout << "Found a" << endl;

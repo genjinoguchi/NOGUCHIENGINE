@@ -13,8 +13,10 @@ class Raster ----- Contains the information to translate the graphics informatio
 
 CHANGELOG
 
-03/27/15
-
+03/26/15
+[mesh.cpp] Finalized the code for creating a point sphere. (double for loop using theta and phi, plug into parametric equations (x, y, z) for a sphere.
+[mesh.cpp] Finalized the code for creating a point torus. (double for loop using theta and phi, plug into parametric equations (x, y, z) for a torus.
+[mesh.cpp] Finalized the code for creating a point cube.
 
 03/25/15 and before: 
 /* FILL THIS IN TONIGHT!!!! */

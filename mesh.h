@@ -56,6 +56,14 @@ class Mesh : public Mat4 {
 			double theta, double phi,
 			double circleRadius, double torusRadius
 		);
+		inline double torusY(
+			double theta, double phi,
+			double circleRadius, double torusRadius
+		);
+		inline double torusZ(
+			double theta, double phi,
+			double circleRadius, double torusRadius
+		);
 
 		////////// Curve Creation /////////////////////////
 		
