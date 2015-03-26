@@ -12,18 +12,26 @@ class Raster ----- Contains the information to translate the graphics informatio
 
 
 CHANGELOG
-* Matrix transformations - translations, transformations, rotations along the X, Y, Z axes.
-* Matrix library class, easily inheritable.
+
+03/27/15
+
+
+03/25/15 and before: 
+/* FILL THIS IN TONIGHT!!!! */
 
 
 Things to do:
-* Update the changelog
+* Update the changelog!!!!!!
+* Turn header files into documentation
 * Mucho comments
 * Add file interpreter
 * Add functions for memory expansion and reduction
 * Colors (textures?)
 * 3D
 * Optimize the matrix class
+
+
+
 
 
 

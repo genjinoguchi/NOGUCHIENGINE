@@ -42,8 +42,8 @@ inline double Mesh::unitCircleY(double t) {
 /* 3D Shapes */
 void Mesh::insertRectPrism(
 		double x, double y, double z,
-		double w, double h, double d ) {
-
+		double w, double h, double d
+		) {
 }
 
 void Mesh::insertSphere(
@@ -53,7 +53,7 @@ void Mesh::insertSphere(
 	double x1, y1, z1;
 	int p;
 	
-	for( phi=0; phi<=1+STEP_SIZE; phi+=STEP_SIZE ){
+	for( phi=0; phi<=1; phi+=STEP_SIZE ){
 		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
 			x1 = x + (r * unitSphereX(theta, phi));
 			y1 = y + (r * unitSphereY(theta, phi));
@@ -68,13 +68,13 @@ void Mesh::insertSphere(
 }
 
 inline double Mesh::unitSphereX(double theta, double phi) {
-	return cos(theta * M_PI);
+	return cos(theta * 2 * M_PI);
 }
 inline double Mesh::unitSphereY(double theta, double phi) {
-	return sin(theta * M_PI)*cos(phi * 2 * M_PI);
+	return sin(theta * 2 * M_PI)*cos(phi * M_PI);
 }
 inline double Mesh::unitSphereZ(double theta, double phi) {
-	return sin(theta * M_PI)*sin(phi * 2 * M_PI);
+	return sin(theta * 2 * M_PI)*sin(phi * M_PI);
 }
 
 
