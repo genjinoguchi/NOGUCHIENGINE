@@ -15,11 +15,11 @@ class Graphics {
 		Graphics();
 		Graphics(int width, int height);
 
-		vector<Mesh> meshes;
+		vector<Mesh *> meshes;
 		Raster raster;
 	
-		int addMesh(Mesh&);
-		Mesh * getMeshes();
+		int addMesh(Mesh *);
+		vector<Mesh *> getMeshes();
 
 		void exportGraph();
 		void display();

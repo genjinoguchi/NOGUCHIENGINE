@@ -16,7 +16,7 @@ Graphics::Graphics(int width, int height) {
 	this->raster = tmp;
 }
 
-int Graphics::addMesh(Mesh& m) {
+int Graphics::addMesh(Mesh *m) {
 	meshes.push_back(m);
 	return meshes.size()-1;
 }
@@ -27,11 +27,13 @@ void Graphics::exportGraph() {
 	vector<Vect4> p;
 	vector<int> e;
 
+	raster.clear();
+
 	for (j=0;j<meshes.size();j++) {
-		p = meshes[j].transformPoints().data;
-		e = meshes[j].edges;
+		p = meshes[j]->transformPoints().data;
+		e = meshes[j]->edges;
 		for (i=0;i<e.size();i+=2) {
-			cout << to_string(p[e[i]].y) << endl;	
+			cout << to_string(p[e[i]].y) << endl;
 			cout << to_string(p[e[i+1]].y) << endl;	
 			cout << endl;
 			raster.drawLine(
@@ -80,10 +82,11 @@ void Graphics::save(string filename) {
 
 int Graphics::loadDWFile(string filename) {
 	ifstream file(filename);
-	Mesh m;
+	Mesh *m = new Mesh();
 	int i;
 
 	i = -1;
+	i = addMesh(m);
 
 	string line, args;
 	while( getline(file, line) ){
@@ -93,18 +96,18 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x0 >> y0 >> z0 >> x1 >> y1 >> z1) {
-				m.insertEdge(m.insert(x0,y0,z0,1),m.insert(x1,y1,z1,1));
+				m->insertEdge(m->insert(x0,y0,z0,1), m->insert(x1,y1,z1,1));
 			}
 		} else if( line == "i" ) {
 			cout << "Found i" << endl;
-			m.resetPosition();
+			m->resetPosition();
 		} else if( line == "s" ) {
 			cout << "Found s" << endl;
 			double a, b, c;
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> a >> b >> c) {
-				m.scale(a, b, c);
+				m->scale(a, b, c);
 			}
 		} else if( line == "t" ) {
 			cout << "Found t" << endl;
@@ -112,7 +115,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> dx >> dy >> dz) {
-				m.trans(dx, dy, dz);
+				m->trans(dx, dy, dz);
 			}
 		} else if( line == "x" ) {
 			cout << "Found x" << endl;
@@ -120,7 +123,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> theta) {
-				m.rotateX(theta);
+				m->rotateX(theta);
 			}
 		} else if( line == "y" ) {
 			cout << "Found y" << endl;
@@ -128,7 +131,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> theta) {
-				m.rotateY(theta);
+				m->rotateY(theta);
 			}
 		} else if( line == "z" ) {
 			cout << "Found z" << endl;
@@ -136,7 +139,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> theta) {
-				m.rotateZ(theta);
+				m->rotateZ(theta);
 			}
 		} else if (line == "c") {
 			cout << "Found c" << endl;
@@ -144,7 +147,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x >> y >> r) {
-				m.insertCircle(x, y, r);
+				m->insertCircle(x, y, r);
 			}
 		} else if (line == "b") {
 			cout << "Found b" << endl;
@@ -152,7 +155,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x0 >> y0 >> x1 >> y1 >> x2 >> y2 >> x3 >> y3) {
-				m.insertBezier(x0, y0, x1, y1, x2, y2, x3, y3);
+				m->insertBezier(x0, y0, x1, y1, x2, y2, x3, y3);
 			}
 		} else if (line == "h") {
 			cout << "Found h" << endl;
@@ -160,7 +163,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x0 >> y0 >> x1 >> y1 >> x2 >> y2 >> x3 >> y3) {
-				m.insertHermite(x0, y0, x1, y1, x2, y2, x3, y3);
+				m->insertHermite(x0, y0, x1, y1, x2, y2, x3, y3);
 			}
 		} else if (line == "p") {
 			cout << "Found p" << endl;
@@ -168,7 +171,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x >> y >> z >> w >> h >> d) {
-				m.insertRectPrism(x, y, z, w, h, d);
+				m->insertRectPrism(x, y, z, w, h, d);
 			}
 		} else if (line == "m") {
 			cout << "Found m" << endl;
@@ -176,7 +179,7 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x >> y >> r) {
-				m.insertSphere(x, y, r);
+				m->insertSphere(x, y, r);
 			}
 		} else if (line == "d") {
 			cout << "Found d" << endl;
@@ -184,24 +187,25 @@ int Graphics::loadDWFile(string filename) {
 			getline(file, args);
 			istringstream iss(args);
 			if(iss >> x >> y >> r1 >> r2) {
-				m.insertTorus(x, y, r1, r2);
+				m->insertTorus(x, y, r1, r2);
 			}
 		} else if( line == "a" ) {
 			cout << "Found a" << endl;
-			m.applyTransformation();
+			m->applyTransformation();
+			
 		} else if( line == "v" ) {
 			cout << "Found v" << endl;
-			i = addMesh(m);
 			exportGraph();
 			system("display out.ppm");
 		} else if( line == "g" ) {
 			cout << "Found g" << endl;
-			i = addMesh(m);
 			getline(file, args);
 			exportGraph();
 			string tmp = "convert out.ppm " + args;
 			system(tmp.c_str());
-		} 
+		} else {
+			cout << "Syntax error." << endl;
+		}
 	}
 	
 

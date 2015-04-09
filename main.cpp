@@ -1,6 +1,4 @@
 #include <iostream>
-#include "graphics.h"
-#include "raster.h"
 #include "matrix.h"
 #include "mesh.h"
 #include "vect4.h"
@@ -58,7 +56,7 @@ int main() {
 
 	g.exportGraph();
 
-	int i = g.loadDWFile("three.dwobj");
+	int i = g.loadDWFile("./three.dwobj");
 
 	cout << "Done." << endl;
 

@@ -12,10 +12,10 @@ struct Pixel {
 };
 
 class Raster {
-	int width, height;
-	Pixel *display;	
 
 	public:
+		int width, height;
+		Pixel *display;	
 		Raster();
 		Raster(int width, int height);
 
@@ -28,6 +28,8 @@ class Raster {
 		void drawCircle(int x, int y, int r);
 
 		void exportPPM();
+
+		void print();
 
 	private:
 		void init(int width, int height);

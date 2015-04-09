@@ -16,7 +16,7 @@ class Mesh : public Mat4 {
 	public:
 		Mesh();
 				
-		vector<int> edges;
+		vector<int> edges;		// List of edges, groups of 2 ints.
 		Mat4 transformation;
 		
 		////////// Edge Creation //////////////////////////

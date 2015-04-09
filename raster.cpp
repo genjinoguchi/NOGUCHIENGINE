@@ -80,6 +80,18 @@ void Raster::exportPPM() {
 	fs.close();
 }
 
+void Raster::print() {
+	int r, c;
+
+	for( r=0; r<height; r++ ){
+		for( c=0; c<width; c++ ){
+			cout << to_string(display[r*width + c].r) << " ";
+			cout << to_string(display[r*width + c].g) << " ";
+			cout << to_string(display[r*width + c].b) << " ";
+		}
+	}
+}
+
 
 
 

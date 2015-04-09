@@ -1,0 +1,17 @@
+CHANGELOG
+
+04/08/15
+[graphics.cpp] Fixed meshlist such that the list contains a list of the mesh pointers, rather than the actual memory of the meshes themselves.
+[graphics.cpp] Engine automatically applies each mesh's stored transformation matrix when exporting to raster.
+
+03/26/15
+[mesh.cpp] Finalized the code for creating a point sphere. (double for loop using theta and phi, plug into parametric equations (x, y, z) for a sphere.
+[mesh.cpp] Finalized the code for creating a point torus. (double for loop using theta and phi, plug into parametric equations (x, y, z) for a torus.
+[mesh.cpp] Finalized the code for creating a point cube.
+
+03/25/15 and before: 
+[mesh.cpp]
+[graphics.cpp]
+[loader.cpp]
+[matrix.cpp]
+[raster.cpp]
