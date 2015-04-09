@@ -30,12 +30,14 @@ void Graphics::exportGraph() {
 	raster.clear();
 
 	for (j=0;j<meshes.size();j++) {
+		/* Export edges and polygons */
 		p = meshes[j]->transformPoints().data;
 		e = meshes[j]->edges;
+		f = meshes[j]->polygons;
 		for (i=0;i<e.size();i+=2) {
-			cout << to_string(p[e[i]].y) << endl;
-			cout << to_string(p[e[i+1]].y) << endl;	
-			cout << endl;
+			//cout << to_string(p[e[i]].y) << endl;
+			//cout << to_string(p[e[i+1]].y) << endl;	
+			//cout << endl;
 			raster.drawLine(
 					p[e[i]].x,	
 					p[e[i]].y,	
@@ -43,7 +45,29 @@ void Graphics::exportGraph() {
 					p[e[i+1]].y
 					);
 		}
+		for (i=0; i<f.size(); i+=3 ){	
+			raster.drawLine(
+					p[f[i]].x,	
+					p[f[i]].y,	
+					p[f[i+1]].x,	
+					p[f[i+1]].y
+					);
+			raster.drawLine(
+					p[f[i+1]].x,	
+					p[f[i+1]].y,	
+					p[f[i+2]].x,	
+					p[f[i+2]].y
+					);
+			raster.drawLine(
+					p[f[i]].x,	
+					p[f[i]].y,	
+					p[f[i+2]].x,	
+					p[f[i+2]].y
+					);
+		}
+
 	}
+	
 
 	raster.exportPPM();
 }

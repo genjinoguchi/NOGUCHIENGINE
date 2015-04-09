@@ -5,11 +5,17 @@ Language : C++
 
 
 main.cpp --------- Contains the main function runner and things.
+
 class Matrix ----- Contains the static functions for matrix manipulation.
-class Vect4 ------
+
+struct Vect4 ----- A simple struct that contains 4 ints- x, y, z, 1. Represents a single column of the Mat4.
+
 class Mesh ------- Extends the Matrix class. Extras include a 4x4 matrix for temporary 
+
 class Graphics --- The main function for the graphics library. Contains the function to export to ppm.
+
 class Raster ----- Contains the information to translate the graphics information into something displayable on the screen. Contains the function to export to image (ppm).
+
 class Loader ----- Contains the parsers for different types of object files.
 
 
@@ -22,7 +28,7 @@ Short-term
 * Polygon implementation
 * Write a .obj parser.
 * Fix the null return warnings
-* 
+ 
 
 Long-term
 * Update the changelog!!!!!!

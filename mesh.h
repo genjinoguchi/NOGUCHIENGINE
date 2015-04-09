@@ -16,7 +16,8 @@ class Mesh : public Mat4 {
 	public:
 		Mesh();
 				
-		vector<int> edges;		// List of edges, groups of 2 ints.
+		vector<int> edges;			// List of edges, groups of 2 ints.
+		vector<int> polygon;		// List of polygons, groups of 3 ints.
 		Mat4 transformation;
 		
 		////////// Edge Creation //////////////////////////
@@ -25,6 +26,13 @@ class Mesh : public Mat4 {
 		 * Ints represent the position of the points in the point matrix.
 		 */
 		void insertEdge(int, int);
+
+		////////// Polygon Creation //////////////////////////
+		/* 
+		 * Insert 3 edges into the polygon matrix.
+		 * Ints represent the position of the points in the point matrix.
+		 */
+		void insertPolygon(int, int, int);
 
 		////////// 3D /////////////////////////////////////
 		/*
