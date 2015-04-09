@@ -19,6 +19,10 @@ class Raster ----- Contains the information to translate the graphics informatio
 class Loader ----- Contains the parsers for different types of object files.
 
 
+<br>
+<br>
+<br>
+<br>
 
 
 
@@ -29,17 +33,17 @@ Short-term
 * Write a .obj parser.
 * Fix the null return warnings
  
+<br>
+<br>
 
 Long-term
 * Update the changelog!!!!!!
 * Turn header files into documentation
 * Mucho comments
 * Add file interpreter
-* Add functions for memory expansion and reduction
 * Colors (textures?)
-* 3D
 * Optimize the matrix class
-
+* Compatibility with Linux
 
 
 
