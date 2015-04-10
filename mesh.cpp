@@ -94,7 +94,23 @@ void Mesh::insertSphere(
 	double theta, phi;
 	double x1, y1, z1;
 	int p;
-	
+	int firstPoint;	// The index of the first point P0 of the sphere.
+
+	firstPoint = data.size();
+
+	/* Plot the points */
+	for( phi=0; phi<=1; phi+=STEP_SIZE ){
+		for( theta=0; theta<=STEP_SIZE; theta+=STEP_SIZE ){
+			x1 = x + (r * unitSphereX(theta, phi));
+			y1 = y + (r * unitSphereY(theta, phi));
+			z1 =  	 (r * unitSphereZ(theta, phi));
+			p = insert( x1, y1, z1, 1 );				// Add point to point matrix	
+		}
+	}
+
+	for( phi=0;  )
+
+	/*
 	for( phi=0; phi<=1; phi+=STEP_SIZE ){
 		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
 			x1 = x + (r * unitSphereX(theta, phi));
@@ -107,6 +123,7 @@ void Mesh::insertSphere(
 			insertEdge( p, p );							// Plot point as line.
 		}
 	}
+	*/
 }
 
 inline double Mesh::unitSphereX(double theta, double phi) {

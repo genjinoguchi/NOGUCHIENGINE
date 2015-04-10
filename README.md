@@ -43,6 +43,7 @@ Long-term
 * Add file interpreter
 * Colors (textures?)
 * Optimize the matrix class
+* Optimize the sphere insertion algorithms-- possibly using matrix multiplication instead of for loops?
 * Compatibility with Linux
 
 
