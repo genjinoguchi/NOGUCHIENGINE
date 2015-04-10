@@ -32,6 +32,7 @@ Short-term
 * Polygon implementation
 * Write a .obj parser.
 * Fix the null return warnings
+* Optimize the for loops so that ints are used instead of doubles
  
 <br>
 <br>

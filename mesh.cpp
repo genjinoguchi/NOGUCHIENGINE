@@ -93,14 +93,16 @@ void Mesh::insertSphere(
 		double r ) {
 	double theta, phi;
 	double x1, y1, z1;
-	int p;
+	int p, f;
 	int firstPoint;	// The index of the first point P0 of the sphere.
+	int sphereRes; // Level of detail of the sphere, calculated by step_size.
 
 	firstPoint = data.size();
+	sphereRes = 1 / STEP_SIZE;
 
 	/* Plot the points */
 	for( phi=0; phi<=1; phi+=STEP_SIZE ){
-		for( theta=0; theta<=STEP_SIZE; theta+=STEP_SIZE ){
+		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
 			x1 = x + (r * unitSphereX(theta, phi));
 			y1 = y + (r * unitSphereY(theta, phi));
 			z1 =  	 (r * unitSphereZ(theta, phi));
@@ -108,7 +110,35 @@ void Mesh::insertSphere(
 		}
 	}
 
-	for( phi=0;  )
+	cout << "Plotting sphere pole faces" << endl;
+	/* Plot faces */
+	for( phi=0; phi<=sphereRes; phi++ ){
+		cout << to_string(phi) << endl;
+		/* Edge Cases - notice that the for loop excludes these */
+		This line will error.
+		More importantly, the code after these errors is fucked up.
+		theta = 0;
+		insertPolygon(
+				firstPoint,
+				firstPoint+(phi*sphereRes) + 1,
+				firstPoint+((phi+1)*sphereRes)+1
+				);
+
+		theta = sphereRes;
+		insertPolygon(
+				firstPoint+sphereRes,
+				firstPoint+(phi*sphereRes)+theta-1,
+				firstPoint+((phi+1)*sphereRes)+theta-1
+				);
+
+
+		for( theta=1; theta<=sphereRes-1; theta++ ){
+			
+
+			//f = insertPolygon(,,);
+		}
+	}
+
 
 	/*
 	for( phi=0; phi<=1; phi+=STEP_SIZE ){
@@ -127,13 +157,13 @@ void Mesh::insertSphere(
 }
 
 inline double Mesh::unitSphereX(double theta, double phi) {
-	return cos(theta * 2 * M_PI);
+	return cos(theta * M_PI);
 }
 inline double Mesh::unitSphereY(double theta, double phi) {
-	return sin(theta * 2 * M_PI)*cos(phi * M_PI);
+	return sin(theta * M_PI)*cos(phi * 2 * M_PI);
 }
 inline double Mesh::unitSphereZ(double theta, double phi) {
-	return sin(theta * 2 * M_PI)*sin(phi * M_PI);
+	return sin(theta * M_PI)*sin(phi * 2 * M_PI);
 }
 
 
