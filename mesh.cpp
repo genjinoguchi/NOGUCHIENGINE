@@ -16,6 +16,12 @@ void Mesh::insertEdge(int a, int b) {
 	edges.push_back(b);
 }
 
+void Mesh::insertPolygon(int a, int b, int c) {
+	polygons.push_back(a);
+	polygons.push_back(b);
+	polygons.push_back(c);
+}
+
 /* Circle Functions */
 void Mesh::insertCircle(double cx, double cy, double r) {
 	double t;
@@ -43,18 +49,32 @@ inline double Mesh::unitCircleY(double t) {
 void Mesh::insertRectPrism(
 		double x, double y, double z,
 		double w, double h, double d ) {
+	
 	int tbl, tbr, tfl, tfr,
 		bbl, bbr, bfl, bfr;
+	
+	bfl = insert(x, y, z, 1);
+	bfr = insert(x+w, y, z, 1);
+	bbl = insert(x, y, z+d, 1);
+	bbr = insert(x+w, y, z+d, 1);
+	tfl = insert(x, y+h, z, 1);
+	tfr = insert(x+w, y+h, z, 1);
+	tbl = insert(x, y+h, z+d, 1);
+	tbr = insert(x+w, y+h, z+d, 1);
 
-	tfl = insert(x, y, z, 0);
-	tfr = insert(x+w, y, z, 0);
-	tbl = insert(x, y, z+d, 0);
-	tbr = insert(x+w, y, z+d, 0);
-	bfl = insert(x, y-d, z, 0);
-	bfr = insert(x+w, y-d, z, 0);
-	bbl = insert(x, y-d, z+d, 0);
-	bbr = insert(x+w, y-d, z+d, 0);
-
+	insertPolygon(tfl, bfl, bfr);
+	insertPolygon(tfl, bfr, tfr);
+	insertPolygon(tfr, bfr, bbr);
+	insertPolygon(tfr, bbr, tbr);
+	insertPolygon(tbr, bbr, bbl);
+	insertPolygon(tbr, bbl, tbl);
+	insertPolygon(tbl, bbl, bfl);
+	insertPolygon(tbl, bfl, tfl);
+	insertPolygon(tbl, tfl, tfr);
+	insertPolygon(tbl, tfr, tbr);
+	insertPolygon(bfl, bbl, bbr);
+	insertPolygon(bfl, bbr, bfr);
+	/*
 	insertEdge(tfl, tfl);
 	insertEdge(tfr, tfr);
 	insertEdge(tbl, tbl);
@@ -63,6 +83,9 @@ void Mesh::insertRectPrism(
 	insertEdge(bfr, bfr);
 	insertEdge(bbl, bbl);
 	insertEdge(bbr, bbr);
+	*/
+
+	
 }
 
 void Mesh::insertSphere(
@@ -80,7 +103,7 @@ void Mesh::insertSphere(
 			//cout << sin(phi*M_PI) << " ";
 			//cout << sin(theta*2*M_PI) << endl;
 			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
-			p = insert( x1, y1, z1, 0 );				// Add point to point matrix
+			p = insert( x1, y1, z1, 1 );				// Add point to point matrix
 			insertEdge( p, p );							// Plot point as line.
 		}
 	}
@@ -109,7 +132,7 @@ void Mesh::insertTorus(
 			x1 = x + torusX( theta, phi, r1, r2 );
 			y1 = x + torusY( theta, phi, r1, r2 );
 			z1 = x + torusZ( theta, phi, r1, r2 );
-			p = insert( x1, y1, z1, 0 );			// Add point to point matrix.
+			p = insert( x1, y1, z1, 1 );			// Add point to point matrix.
 			insertEdge( p, p );						// Plot point as line
 		}
 	}

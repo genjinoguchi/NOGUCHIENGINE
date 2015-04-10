@@ -138,6 +138,8 @@ double Mat4::get(int r, int c) {
 	return data[c].get(r);
 }
 int Mat4::insert(Vect4 v) {
+	// Into the screen is +z
+	v.z = -v.z;
 	data.push_back(v);
 	return size() - 1;
 }

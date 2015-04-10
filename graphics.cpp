@@ -25,7 +25,7 @@ void Graphics::exportGraph() {
 	cout << "Exporting graph" << endl;
 	int i,j;
 	vector<Vect4> p;
-	vector<int> e;
+	vector<int> e, f;
 
 	raster.clear();
 

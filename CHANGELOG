@@ -1,5 +1,9 @@
 CHANGELOG
 
+04/09/15
+[mesh.cpp] Prism wireframe finalized.
+[matrix.cpp] Update insert() so that +z is into the page.
+
 04/08/15
 [graphics.cpp] Fixed meshlist such that the list contains a list of the mesh pointers, rather than the actual memory of the meshes themselves.
 [graphics.cpp] Engine automatically applies each mesh's stored transformation matrix when exporting to raster.
