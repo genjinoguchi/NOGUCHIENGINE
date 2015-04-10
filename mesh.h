@@ -17,7 +17,7 @@ class Mesh : public Mat4 {
 		Mesh();
 				
 		vector<int> edges;			// List of edges, groups of 2 ints.
-		vector<int> polygon;		// List of polygons, groups of 3 ints.
+		vector<int> polygons;		// List of polygons, groups of 3 ints.
 		Mat4 transformation;
 		
 		////////// Edge Creation //////////////////////////
