@@ -1,5 +1,6 @@
 all: main.o graphics.o raster.o matrix.o mesh.o vect4.o loader.o
 	g++ main.o graphics.o raster.o matrix.o mesh.o vect4.o loader.o
+	./a.out
 
 main.o: main.cpp
 	g++ -c main.cpp

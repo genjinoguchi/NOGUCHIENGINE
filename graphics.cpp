@@ -38,7 +38,6 @@ void Graphics::exportGraph() {
 			//cout << to_string(p[e[i]].y) << endl;
 			//cout << to_string(p[e[i+1]].y) << endl;	
 			//cout << endl;
-			cout << "WHY THE FUCK AREN'T YOU PRINTING" << endl;
 			raster.drawLine(
 					p[e[i]].x,	
 					p[e[i]].y,	
