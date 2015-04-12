@@ -32,6 +32,7 @@ Short-term
 * Polygon implementation
 * Write a .obj parser.
 * Fix the null return warnings
+* Optimize the for loops so that ints are used instead of doubles
  
 <br>
 <br>
@@ -43,6 +44,7 @@ Long-term
 * Add file interpreter
 * Colors (textures?)
 * Optimize the matrix class
+* Optimize the sphere insertion algorithms-- possibly using matrix multiplication instead of for loops?
 * Compatibility with Linux
 
 

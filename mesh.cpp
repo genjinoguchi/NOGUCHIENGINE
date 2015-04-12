@@ -93,8 +93,67 @@ void Mesh::insertSphere(
 		double r ) {
 	double theta, phi;
 	double x1, y1, z1;
-	int p;
+	int p, f;
+	int FIRST_POINT;	// The index of the first point P0 of the sphere.
+	int SPHERE_RES; 	// Level of detail of the sphere, calculated by step_size.
+	int p1,p2;
+
+	FIRST_POINT = data.size();
+	SPHERE_RES = 1 / STEP_SIZE;
+	cout << to_string(SPHERE_RES) << endl;
 	
+	// Plot the points 
+	for( phi=0; phi<=1+STEP_SIZE; phi+=STEP_SIZE ){
+		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
+			x1 = x + (r * unitSphereX(theta, phi));
+			y1 = y + (r * unitSphereY(theta, phi));
+			z1 =  	 (r * unitSphereZ(theta, phi));
+			p = insert( x1, y1, z1, 1 );				// Add point to point matrix	
+			insertEdge( p, p );							// Plot point as line
+		}
+	}
+
+	cout << "Plotting sphere pole faces" << endl;
+	// Plot faces 
+
+
+
+	for( phi=0; phi<SPHERE_RES; phi++ ){
+
+		// Edge Cases - notice that the for loop excludes these 
+		// Genji pls fix this code. it's ugly.
+		theta = 0;
+		insertPolygon(
+				FIRST_POINT,
+				FIRST_POINT+1 +  (phi*(SPHERE_RES+1)),
+				FIRST_POINT+1 + ((phi+1)*(SPHERE_RES+1))
+				);
+
+		theta = SPHERE_RES;
+		insertPolygon(
+				FIRST_POINT+SPHERE_RES,
+				FIRST_POINT+theta-1   + ((phi+1)*(SPHERE_RES+1)),
+				FIRST_POINT+theta-1   +  (phi   *(SPHERE_RES+1))
+				);
+		
+		// Middle Cases
+		for( theta=1; theta<SPHERE_RES-1; theta++ ){
+			p1 = FIRST_POINT + (phi*(SPHERE_RES+1));
+			p2 = FIRST_POINT +((phi+1)*(SPHERE_RES+1));
+			insertPolygon(
+				p1 + theta,
+				p1 + theta+1,
+				p2 + theta
+				);
+			insertPolygon(
+				p1 + theta + 1,
+				p2 + theta,
+				p2 + theta + 1
+				);
+		}
+	}
+
+	/*
 	for( phi=0; phi<=1; phi+=STEP_SIZE ){
 		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
 			x1 = x + (r * unitSphereX(theta, phi));
@@ -107,16 +166,17 @@ void Mesh::insertSphere(
 			insertEdge( p, p );							// Plot point as line.
 		}
 	}
+	*/
 }
 
 inline double Mesh::unitSphereX(double theta, double phi) {
-	return cos(theta * 2 * M_PI);
+	return cos(theta * M_PI);
 }
 inline double Mesh::unitSphereY(double theta, double phi) {
-	return sin(theta * 2 * M_PI)*cos(phi * M_PI);
+	return sin(theta * M_PI)*cos(phi * 2 * M_PI);
 }
 inline double Mesh::unitSphereZ(double theta, double phi) {
-	return sin(theta * 2 * M_PI)*sin(phi * M_PI);
+	return sin(theta * M_PI)*sin(phi * 2 * M_PI);
 }
 
 
