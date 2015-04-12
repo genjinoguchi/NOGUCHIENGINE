@@ -3,6 +3,7 @@ CHANGELOG
 04/12/15
 [mesh.cpp] Sphere wireframe finalized.
 [matrix.cpp] Undo change to insert(), +z is now out of the page. (This change causes errors with hermite and bezier curves.)
+[mesh.cpp] Torus wireframe finalized.
 
 04/09/15
 [mesh.cpp] Prism wireframe finalized.

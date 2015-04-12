@@ -45,7 +45,9 @@ void Graphics::exportGraph() {
 					p[e[i+1]].y
 					);
 		}
-		for (i=0; i<f.size(); i+=3 ){	
+
+		for (i=0; i<f.size(); i+=3 ){
+
 			raster.drawLine(
 					p[f[i]].x,	
 					p[f[i]].y,	

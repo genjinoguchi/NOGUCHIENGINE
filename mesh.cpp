@@ -109,13 +109,11 @@ void Mesh::insertSphere(
 			y1 = y + (r * unitSphereY(theta, phi));
 			z1 =  	 (r * unitSphereZ(theta, phi));
 			p = insert( x1, y1, z1, 1 );				// Add point to point matrix	
-			insertEdge( p, p );							// Plot point as line
+			//insertEdge( p, p );							// Plot point as line
 		}
 	}
 
 	cout << "Plotting sphere pole faces" << endl;
-	// Plot faces 
-
 
 
 	for( phi=0; phi<SPHERE_RES; phi++ ){
@@ -152,21 +150,6 @@ void Mesh::insertSphere(
 				);
 		}
 	}
-
-	/*
-	for( phi=0; phi<=1; phi+=STEP_SIZE ){
-		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
-			x1 = x + (r * unitSphereX(theta, phi));
-			y1 = y + (r * unitSphereY(theta, phi));
-			z1 =  	 (r * unitSphereZ(theta, phi));
-			//cout << sin(phi*M_PI) << " ";
-			//cout << sin(theta*2*M_PI) << endl;
-			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
-			p = insert( x1, y1, z1, 1 );				// Add point to point matrix
-			insertEdge( p, p );							// Plot point as line.
-		}
-	}
-	*/
 }
 
 inline double Mesh::unitSphereX(double theta, double phi) {
@@ -185,9 +168,17 @@ void Mesh::insertTorus(
 		double r1, double r2) {
 	double theta, phi;
 	double x1, y1, z1;
+	int FIRST_POINT;
+	int TORUS_RES;
 	int p;
+	int p1, p2; // The starting points of rows
 
-	for( phi=0; phi<=1; phi+=STEP_SIZE ){
+	FIRST_POINT = data.size();
+	TORUS_RES = 1 / STEP_SIZE;
+
+
+	// Insert points into the point matrix.
+	for( phi=0; phi<=1+STEP_SIZE; phi+=STEP_SIZE ){
 		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE){
 			x1 = x + torusX( theta, phi, r1, r2 );
 			y1 = x + torusY( theta, phi, r1, r2 );
@@ -196,6 +187,29 @@ void Mesh::insertTorus(
 			insertEdge( p, p );						// Plot point as line
 		}
 	}
+
+	// Draw Wireframe
+	for (phi=0; phi<=TORUS_RES-1; phi++) {
+		for (theta=0; theta<=TORUS_RES-1; theta++){
+			p1 = FIRST_POINT + (phi*(TORUS_RES+1));
+			p2 = FIRST_POINT +((phi+1)*(TORUS_RES+1));
+			
+			
+			insertPolygon(
+				p1 + theta,
+				p1 + theta + 1,
+				p2 + theta
+				);
+			
+			
+			insertPolygon(
+				p1 + theta+1,
+				p2 + theta,
+				p2 + theta + 1
+				);
+		}
+	}
+
 }
 inline double Mesh::torusX(
 		double t, double p,
