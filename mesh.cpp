@@ -88,6 +88,40 @@ void Mesh::insertRectPrism(
 	
 }
 
+
+void Mesh::insertSphere(
+		double x, double y,
+		double r ) {
+	double theta, phi;
+	double x1, y1, z1;
+	int p;
+	
+	for( phi=0; phi<=1; phi+=STEP_SIZE ){
+		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
+			x1 = x + (r * unitSphereX(theta, phi));
+			y1 = y + (r * unitSphereY(theta, phi));
+			z1 =  	 (r * unitSphereZ(theta, phi));
+			//cout << sin(phi*M_PI) << " ";
+			//cout << sin(theta*2*M_PI) << endl;
+			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
+			p = insert( x1, y1, z1, 0 );				// Add point to point matrix
+			insertEdge( p, p );							// Plot point as line.
+		}
+	}
+}
+
+inline double Mesh::unitSphereX(double theta, double phi) {
+	return cos(theta * 2 * M_PI);
+}
+inline double Mesh::unitSphereY(double theta, double phi) {
+	return sin(theta * 2 * M_PI)*cos(phi * M_PI);
+}
+inline double Mesh::unitSphereZ(double theta, double phi) {
+	return sin(theta * 2 * M_PI)*sin(phi * M_PI);
+}
+
+
+/*
 void Mesh::insertSphere(
 		double x, double y,
 		double r ) {
@@ -99,8 +133,22 @@ void Mesh::insertSphere(
 
 	firstPoint = data.size();
 	sphereRes = 1 / STEP_SIZE;
+	
+	for( phi=0; phi<=1; phi+=STEP_SIZE ){
+		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
+			x1 = x + (r * unitSphereX(theta, phi));
+			y1 = y + (r * unitSphereY(theta, phi));
+			z1 =  	 (r * unitSphereZ(theta, phi));
+			//cout << sin(phi*M_PI) << " ";
+			//cout << sin(theta*2*M_PI) << endl;
+			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
+			p = insert( x1, y1, z1, 1 );				// Add point to point matrix
+			insertEdge( p, p );							// Plot point as line.
+		}
+	}
 
-	/* Plot the points */
+
+	// Plot the points 
 	for( phi=0; phi<=1; phi+=STEP_SIZE ){
 		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
 			x1 = x + (r * unitSphereX(theta, phi));
@@ -111,12 +159,10 @@ void Mesh::insertSphere(
 	}
 
 	cout << "Plotting sphere pole faces" << endl;
-	/* Plot faces */
+	// Plot faces 
 	for( phi=0; phi<=sphereRes; phi++ ){
 		cout << to_string(phi) << endl;
-		/* Edge Cases - notice that the for loop excludes these */
-		This line will error.
-		More importantly, the code after these errors is fucked up.
+		// Edge Cases - notice that the for loop excludes these 
 		theta = 0;
 		insertPolygon(
 				firstPoint,
@@ -140,20 +186,6 @@ void Mesh::insertSphere(
 	}
 
 
-	/*
-	for( phi=0; phi<=1; phi+=STEP_SIZE ){
-		for( theta=0; theta<=1+STEP_SIZE; theta+=STEP_SIZE ){
-			x1 = x + (r * unitSphereX(theta, phi));
-			y1 = y + (r * unitSphereY(theta, phi));
-			z1 =  	 (r * unitSphereZ(theta, phi));
-			//cout << sin(phi*M_PI) << " ";
-			//cout << sin(theta*2*M_PI) << endl;
-			//cout << cos(phi*M_PI)*sin(theta*2*M_PI) << endl;
-			p = insert( x1, y1, z1, 1 );				// Add point to point matrix
-			insertEdge( p, p );							// Plot point as line.
-		}
-	}
-	*/
 }
 
 inline double Mesh::unitSphereX(double theta, double phi) {
@@ -165,7 +197,7 @@ inline double Mesh::unitSphereY(double theta, double phi) {
 inline double Mesh::unitSphereZ(double theta, double phi) {
 	return sin(theta * M_PI)*sin(phi * 2 * M_PI);
 }
-
+*/
 
 void Mesh::insertTorus(
 		double x, double y,

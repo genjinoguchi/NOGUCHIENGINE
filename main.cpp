@@ -56,7 +56,7 @@ int main() {
 
 	g.exportGraph();
 
-	int i = g.loadDWFile("./three.dwobj");
+	int i = g.loadDWFile("./curvetest.dwobj");
 
 	cout << "Done." << endl;
 
