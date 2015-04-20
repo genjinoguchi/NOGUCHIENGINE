@@ -8,12 +8,18 @@
 using namespace std;
 
 Graphics::Graphics() {
-	
+	init(500, 500);
 }
 
 Graphics::Graphics(int width, int height) {
-	Raster tmp(width, height);
-	this->raster = tmp;
+	init(width, height);
+}
+
+void Graphics::init(int width, int height) {
+	Raster raster(width, height);
+	Vect4 view(0, 0, -1, 1);
+	this->raster = raster;
+	this->view = view;
 }
 
 int Graphics::addMesh(Mesh *m) {
@@ -34,6 +40,8 @@ void Graphics::exportGraph() {
 		p = meshes[j]->transformPoints().data;
 		e = meshes[j]->edges;
 		f = meshes[j]->polygons;
+
+		/* Edges */
 		for (i=0;i<e.size();i+=2) {
 			//cout << to_string(p[e[i]].y) << endl;
 			//cout << to_string(p[e[i+1]].y) << endl;	
@@ -46,28 +54,59 @@ void Graphics::exportGraph() {
 					);
 		}
 
+		/* Polygons */	
+		Vect4 normal, a, b;
+		int mcost;
 		for (i=0; i<f.size(); i+=3 ){
 
-			raster.drawLine(
-					p[f[i]].x,	
-					p[f[i]].y,	
-					p[f[i+1]].x,	
-					p[f[i+1]].y
-					);
-			raster.drawLine(
-					p[f[i+1]].x,	
-					p[f[i+1]].y,	
-					p[f[i+2]].x,	
-					p[f[i+2]].y
-					);
-			raster.drawLine(
-					p[f[i]].x,	
-					p[f[i]].y,	
-					p[f[i+2]].x,	
-					p[f[i+2]].y
-					);
-		}
+			
+			/* Check the orientation of the polygon using backface culling */
+			
+			a.set(
+				p[f[i+1]].x-p[f[i]].x,
+				p[f[i+1]].y-p[f[i]].y,
+				p[f[i+1]].z-p[f[i]].z,
+				1);
+			b.set(
+				p[f[i+2]].x-p[f[i]].x,
+				p[f[i+2]].y-p[f[i]].y,
+				p[f[i+2]].z-p[f[i]].z,
+				1);
+			normal.set(
+				a.y*b.z - a.z*b.y,
+				a.z*b.x - a.x*b.z,
+				a.x*b.y - a.y*b.x,
+				1);
+			
 
+			// N • V
+			mcost = 
+				normal.x * view.x + 
+				normal.y * view.y +
+				normal.z * view.z;
+			cout << mcost << endl;
+			if (mcost <= 0 ) {
+				/* Send the 3 edges to the raster */
+				raster.drawLine(
+						p[f[i]].x,	
+						p[f[i]].y,	
+						p[f[i+1]].x,	
+						p[f[i+1]].y
+						);
+				raster.drawLine(
+						p[f[i+1]].x,
+						p[f[i+1]].y,
+						p[f[i+2]].x,
+						p[f[i+2]].y
+						);
+				raster.drawLine(
+						p[f[i]].x,
+						p[f[i]].y,
+						p[f[i+2]].x,
+						p[f[i+2]].y
+						);
+			}	
+		}
 	}
 	
 

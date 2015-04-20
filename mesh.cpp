@@ -123,15 +123,15 @@ void Mesh::insertSphere(
 		theta = 0;
 		insertPolygon(
 				FIRST_POINT,
-				FIRST_POINT+1 +  (phi*(SPHERE_RES+1)),
-				FIRST_POINT+1 + ((phi+1)*(SPHERE_RES+1))
+				FIRST_POINT+1 + ((phi+1)*(SPHERE_RES+1)),
+				FIRST_POINT+1 +  (phi*(SPHERE_RES+1))
 				);
 
 		theta = SPHERE_RES;
 		insertPolygon(
 				FIRST_POINT+SPHERE_RES,
-				FIRST_POINT+theta-1   + ((phi+1)*(SPHERE_RES+1)),
-				FIRST_POINT+theta-1   +  (phi   *(SPHERE_RES+1))
+				FIRST_POINT+theta-1   +  (phi   *(SPHERE_RES+1)),
+				FIRST_POINT+theta-1   + ((phi+1)*(SPHERE_RES+1))
 				);
 		
 		// Middle Cases
@@ -140,14 +140,16 @@ void Mesh::insertSphere(
 			p2 = FIRST_POINT +((phi+1)*(SPHERE_RES+1));
 			insertPolygon(
 				p1 + theta,
-				p1 + theta+1,
-				p2 + theta
+				p2 + theta,
+				p1 + theta+1
 				);
+			
 			insertPolygon(
 				p1 + theta + 1,
 				p2 + theta,
 				p2 + theta + 1
 				);
+				
 		}
 	}
 }
@@ -192,20 +194,16 @@ void Mesh::insertTorus(
 	for (phi=0; phi<=TORUS_RES-1; phi++) {
 		for (theta=0; theta<=TORUS_RES-1; theta++){
 			p1 = FIRST_POINT + (phi*(TORUS_RES+1));
-			p2 = FIRST_POINT +((phi+1)*(TORUS_RES+1));
-			
-			
+			p2 = FIRST_POINT +((phi+1)*(TORUS_RES+1));	
 			insertPolygon(
 				p1 + theta,
 				p1 + theta + 1,
 				p2 + theta
-				);
-			
-			
+				);	
 			insertPolygon(
 				p1 + theta+1,
-				p2 + theta,
-				p2 + theta + 1
+				p2 + theta + 1,
+				p2 + theta
 				);
 		}
 	}

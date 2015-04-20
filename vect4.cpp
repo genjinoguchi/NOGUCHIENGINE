@@ -44,4 +44,8 @@ void Vect4::set(int i, double d) {
 		case 3:
 			w = d;
 	}
-}	
+}
+
+void Vect4::set(double x, double y, double z, double w) {
+	init(x, y, z, w);
+}

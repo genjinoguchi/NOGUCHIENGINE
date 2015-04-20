@@ -25,6 +25,7 @@ class Vect4 {
 		Vect4();
 		double get(int i);
 		void set(int i, double v);
+		void set(double x, double y, double z, double w);
 	private:
 		void init(double x, double y, double z, double w);
 };

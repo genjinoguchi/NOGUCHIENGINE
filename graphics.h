@@ -14,9 +14,12 @@ class Graphics {
 	public:
 		Graphics();
 		Graphics(int width, int height);
+		void init(int width, int height);
 
 		vector<Mesh *> meshes;
 		Raster raster;
+
+		Vect4 view;
 	
 		int addMesh(Mesh *);
 		vector<Mesh *> getMeshes();
