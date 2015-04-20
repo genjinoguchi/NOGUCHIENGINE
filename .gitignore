@@ -35,5 +35,6 @@ Session.vim
 .netrwhist
 *~
 
-# PPM Files
+# Image Files
 *.ppm
+*.png
