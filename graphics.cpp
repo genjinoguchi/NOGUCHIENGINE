@@ -27,6 +27,35 @@ int Graphics::addMesh(Mesh *m) {
 	return meshes.size()-1;
 }
 
+void Graphics::writeScript() {
+	ofstream fs;
+	fs.open("backface.dwobj");
+
+	int x=50, y=600;
+	int vx=100, vy=100;
+	int g=30;
+
+	cout << "Writing backface.dwobj" << endl;
+	while (x <= 1200)
+	{
+		vy -= g;
+		x+=vx;
+		y+=vy;
+		
+		if (y<100)
+		{
+			y = 100;
+			vy = -vy;
+		}
+
+		fs << "m\n" + to_string(x) + " " + to_string(y) + " 50" << endl;
+	}
+
+	fs << "v" << endl;
+	fs << "g\npic.png" << endl;
+	fs.close();
+}
+
 void Graphics::exportGraph() {
 	cout << "Exporting graph" << endl;
 	int i,j;

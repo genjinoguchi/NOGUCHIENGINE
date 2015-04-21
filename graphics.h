@@ -28,6 +28,7 @@ class Graphics {
 		void display();
 		void save(string filename);
 
+		void writeScript();
 
 		/*
 		 * Loads in a mesh using Mr. DW's file syntax.

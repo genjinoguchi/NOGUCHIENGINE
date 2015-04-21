@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-	Graphics g(500,500);
+	Graphics g(1600, 900);
 	//Mesh m, m2;
 
 	/*
@@ -54,9 +54,8 @@ int main() {
 
 	*/
 
-	g.exportGraph();
-
-	int i = g.loadDWFile("./three.dwobj");
+	g.writeScript();
+	int i = g.loadDWFile("./backface.dwobj");
 
 	cout << "Done." << endl;
 
